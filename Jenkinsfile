@@ -13,12 +13,17 @@ pipeline {
                 branch 'master'
             }
             steps {
+                withCredentials([usernamePassword(credentialsId: 'ub-server', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
                     sshPublisher(
                         failOnError: true,
                         continueOnError: false,
                         publishers: [
                             sshPublisherDesc(
                                 configName: 'ub-server2',
+                                sshCredentials: [
+                                    username: "$USERNAME",
+                                    encryptedPassphrase: "$USERPASS"
+                                ], 
                                 transfers: [
                                     sshTransfer(
                                         sourceFiles: 'dist/trainSchedule.zip',
@@ -30,7 +35,7 @@ pipeline {
                             )
                         ]
                     )
-                
+                }
             }
         }
     }
