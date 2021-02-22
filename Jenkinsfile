@@ -13,7 +13,6 @@ pipeline {
                 branch 'master'
             }
             steps {
-                withCredentials([usernamePassword(credentialsId: 'ub-server')]) {
                     sshPublisher(
                         failOnError: true,
                         continueOnError: false,
@@ -31,7 +30,7 @@ pipeline {
                             )
                         ]
                     )
-                }
+                
             }
         }
     }
