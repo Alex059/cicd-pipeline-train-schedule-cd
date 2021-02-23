@@ -39,5 +39,39 @@ pipeline {
                 }
             }
         }
+        
+        stage('DeployToUbServer3') {
+            when {
+                branch 'master'
+            }
+            steps {
+                input 'Does the UbServer2 environment look OK?'
+                milestone(1)
+                withCredentials([usernamePassword(credentialsId: 'ub-server', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
+                    sshPublisher(
+                        failOnError: true,
+                        continueOnError: false,
+                        publishers: [
+                            sshPublisherDesc(
+                                configName: 'ub-server3',
+                                verbose: true,
+                                sshCredentials: [
+                                    username: "$USERNAME",
+                                    encryptedPassphrase: "$USERPASS"
+                                ], 
+                                transfers: [
+                                    sshTransfer(
+                                        sourceFiles: 'dist/trainSchedule.zip',
+                                        removePrefix: 'dist/',
+                                        remoteDirectory: '/tmp',
+                                        execCommand: 'sudo $(which docker) rm -f train-schedule && sudo rm -rf /opt/train-schedule/* && sudo unzip /tmp/trainSchedule.zip -d /opt/train-schedule && sudo $(which docker-compose) up -d -f /opt/train-schedule/docker-compose.yml'
+                                    )
+                                ]
+                            )
+                        ]
+                    )
+                }
+            }
+        }
     }
 }

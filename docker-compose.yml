@@ -1,0 +1,11 @@
+version: "2.1"
+services:
+  train-schedule:
+    image: gradle:latest
+    container_name: train-schedule
+    volumes:
+      - /opt/train-schedule:/home/gradle/project
+    ports:
+      - "3000:3000"
+    working_dir: /home/gradle/project
+    command: ["gradle", "npm_start"]
