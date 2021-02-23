@@ -21,8 +21,8 @@ pipeline {
                             sshPublisherDesc(
                                 configName: 'ub-server2',
                                 sshCredentials: [
-                                    username: "$USERNAME",
-                                    encryptedPassphrase: "$USERPASS"
+                                    username: "admin2",
+                                    encryptedPassphrase: "Admin2"
                                 ], 
                                 transfers: [
                                     sshTransfer(
