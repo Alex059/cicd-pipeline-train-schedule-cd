@@ -20,9 +20,10 @@ pipeline {
                         publishers: [
                             sshPublisherDesc(
                                 configName: 'ub-server2',
+                                verbose: true,
                                 sshCredentials: [
-                                    username: "admin2",
-                                    encryptedPassphrase: "Admin2"
+                                    username: "$USERNAME",
+                                    encryptedPassphrase: "$USERPASS"
                                 ], 
                                 transfers: [
                                     sshTransfer(
