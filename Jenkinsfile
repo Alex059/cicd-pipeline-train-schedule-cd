@@ -64,7 +64,7 @@ pipeline {
                                         sourceFiles: 'dist/trainSchedule.zip',
                                         removePrefix: 'dist/',
                                         remoteDirectory: '/tmp',
-                                        execCommand: 'sudo $(which docker) rm -f train-schedule && sudo rm -rf /opt/train-schedule/* && sudo unzip /tmp/trainSchedule.zip -d /opt/train-schedule && sudo $(which docker-compose) up -d -f /opt/train-schedule/docker-compose.yml'
+                                        execCommand: 'sudo $(which docker) rm -f train-schedule && sudo rm -rf /opt/train-schedule/* && sudo unzip /tmp/trainSchedule.zip -d /opt/train-schedule && sudo $(which docker-compose) -f /opt/train-schedule/docker-compose.yml up -d'
                                     )
                                 ]
                             )
